@@ -1,0 +1,48 @@
+body{
+  background: #0073e6;
+  color:white;
+}
+.wrapper{
+  margin-left:30%;
+}
+div{
+  padding:1%;
+}
+label{
+  display:inline-block;
+  width:20%;
+}
+
+#myDivButton
+{
+  background: rgba(255,255,255,0.5);
+  width:100px;
+  text-align:center;
+  color:#0073e6;
+}
+
+#myDivButton:hover
+{
+  background: rgba(255,255,255,1);
+
+}
+
+.line{width:40%;}
+hr{width: 100%;color:#66b3ff;}
+
+#otherClientDataA{
+  margin-top:2%;
+  margin-left:1%;
+  width:40%;
+  background:#66b3ff;
+  color:white;
+  display:inline-block;
+}
+#otherClientDataB{
+  margin-top:2%;
+  margin-left:1%;
+  width:40%;
+  background:#66b3ff;
+  color:white;
+  display:inline-block;
+}

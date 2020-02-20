@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+    <head>
+
+      <meta charset="utf-8" />
+        <title>Node.js SOCKET IO Ex with Particle.IO and UDP</title>
+
+          <!-- The stylesheets -->
+          <link rel="stylesheet" href="css/clientStyle.css" />
+
+    </head>
+    <body>
+    <div class = "wrapper">
+      <h1> This is the Client page </h1>
+      <p id = "clientId"> My ID is :: </p>
+
+
+      <div id = "otherClientDataA"></div>
+      <div id = "otherClientDataB"></div>
+
+      <div class = "line"><hr></div>
+      <div><label> Value One :: </label><input id="one" type="text"></div>
+      <div><label>Value Two:: </label><input id="two" type="text"></div>
+      <div class = "line"><hr></div>
+      <div id = "myDivButton"> Submit </div>
+    </div>
+      <script src="/socket.io/socket.io.js"></script>
+      <script src="/js/client.js" > </script>
+    </body>
+
+
+
+</html>

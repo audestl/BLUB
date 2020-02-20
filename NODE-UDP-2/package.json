@@ -1,0 +1,22 @@
+{
+  "name": "node-udp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dgram": "^1.0.1",
+    "express": "^4.17.1",
+    "moment": "^2.24.0",
+    "net": "^1.0.2",
+    "node-static": "^0.7.11",
+    "osc-min": "^1.1.2",
+    "socket.io": "^2.3.0",
+    "winston": "^3.2.1",
+    "winston-daily-rotate-file": "^4.4.2"
+  }
+}
