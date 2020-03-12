@@ -24,31 +24,33 @@ function setup() {
   background(0,0,0);
 
   //first game trail
-  for (let i = 100; i < 500; i = i + 55) {
-    let a;
-      a = createVector(i, 600-i);
-      //point(a);
-      pointsArray.push(a);
+  for (let i = windowWidth/15; i < ((windowWidth/4)*1.5); i = i + 55) {
+    if(i > (windowWidth/15.4 + 60)){
+      let a;
+        a = createVector(i, (windowHeight-windowHeight/30)-i);
+        //point(a);
+        pointsArray.push(a);
+    }
   }
 
   //continuation of game trail
-  let x = 70;
-  for (let i = 545; i < 1000; i = i + 70) {
+  let x = pointsArray[(pointsArray.length)-1].y;
+  for (let i = ((windowWidth/4)*1.7); i < ((windowWidth/4)*3); i = i + 70) {
     let a;
       a = createVector(i, x);
       //point(a);
       pointsArray.push(a);
-      x = x + 25;
+      x = x + 20;
   }
 
   //continuation of game trail
-  let x2 = 280;
-  for (let i = 1010; i < 1090; i = i + 20) {
+  let x2 = (pointsArray[(pointsArray.length)-1].y) + 45;
+  for (let i = ((windowWidth/4)*3); i < (windowWidth-55); i = i + 50) {
     let a;
       a = createVector(i, x2);
       //point(a);
       pointsArray.push(a);
-      x2 = x2 + 75;
+      x2 = x2 + 60;
   }
 
   let col = 20;
@@ -63,6 +65,11 @@ function setup() {
 
 function draw() {
   background(0,0,0);
+  rectMode(CENTER);
+  strokeWeight(1);
+  stroke(255, 255, 255);
+  noFill();
+  rect(windowWidth/2, windowHeight/2, windowWidth-30, windowHeight -30);
   millisecond = millis();
 
   if(introTitleName){
@@ -98,7 +105,7 @@ function draw() {
     fill(0,0,0, rectFade);
     noStroke();
     rectMode(CENTER);
-    rect(windowWidth/2, windowHeight/2, 1000, 800);
+    rect(windowWidth/2, windowHeight/2, windowWidth/2, windowHeight/2);
 
     if(millisecond > 6000 && goal === true){
       goalFade = increaseFade2(goalFade);
@@ -136,7 +143,7 @@ function draw() {
     fill(0,0,0, rectFade2);
     noStroke();
     rectMode(CENTER);
-    rect(windowWidth/2, windowHeight/2, 1500, 800);
+    rect(windowWidth/2, windowHeight/2, windowWidth/2, windowHeight/2);
 
     if(millisecond > 15000 && instructions === true){
       goalFade2 = increaseFade2(goalFade2);
@@ -182,6 +189,7 @@ function draw() {
 
 
   if(triggerCircles){
+
     for (let i = 0; i < circleTrail.length; i++) {
       var individualCircle = circleTrail[i];
       individualCircle.behaviors();
@@ -189,8 +197,35 @@ function draw() {
       individualCircle.update();
       individualCircle.display();
     }
+    push();
+    fill(242,158,121);
+    noStroke();
+    translate(windowWidth-windowWidth/15.4, windowHeight-windowHeight/8);
+    rotate(frameCount / -300.0);
+    polygon(0, 0, 60, 8);
+    pop();
+
+    push();
+    fill(242,158,121);
+    noStroke();
+    translate(windowWidth/15.4, windowHeight-windowHeight/8);
+    rotate(frameCount / -300.0);
+    polygon(0, 0, 60, 8);
+    pop();
   }
 }
+
+function polygon(x, y, radius, npoints) {
+  let angle = TWO_PI / npoints;
+  beginShape();
+  for (let a = 0; a < TWO_PI; a += angle) {
+    let sx = x + cos(a) * radius;
+    let sy = y + sin(a) * radius;
+    vertex(sx, sy);
+  }
+  endShape(CLOSE);
+}
+
 
 function increasePos(){
   if(pos < 240){
