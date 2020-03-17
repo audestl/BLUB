@@ -19,6 +19,14 @@ let goalFade2 = 0;
 let instructions = false;
 let endingMessage = false;
 
+let font;
+let font2;
+
+function preload() {
+  font = loadFont('Lulo Clean W01 Outline Bold.otf');
+  font2 = loadFont('Lulo Clean W01 One Bold.ttf');
+}
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(0,0,0);
@@ -35,22 +43,24 @@ function setup() {
 
   //continuation of game trail
   let x = pointsArray[(pointsArray.length)-1].y;
-  for (let i = ((windowWidth/4)*1.7); i < ((windowWidth/4)*3); i = i + 70) {
+  for (let i = pointsArray[(pointsArray.length)-1].x; i < ((windowWidth/4)*3); i = i + 70) {
     let a;
       a = createVector(i, x);
       //point(a);
       pointsArray.push(a);
-      x = x + 20;
+      x = x + 10;
   }
 
   //continuation of game trail
-  let x2 = (pointsArray[(pointsArray.length)-1].y) + 45;
-  for (let i = ((windowWidth/4)*3); i < (windowWidth-55); i = i + 50) {
-    let a;
-      a = createVector(i, x2);
-      //point(a);
-      pointsArray.push(a);
-      x2 = x2 + 60;
+  let x2 = (pointsArray[(pointsArray.length)-1].y);
+  for (let i = pointsArray[(pointsArray.length)-1].x; i < (windowWidth - windowWidth/14); i = i + 50) {
+    if(x2 < (windowHeight-windowHeight/5)){
+      let a;
+        a = createVector(i, x2);
+        //point(a);
+        pointsArray.push(a);
+        x2 = x2 + 60;
+    }
   }
 
   let col = 20;
@@ -64,6 +74,7 @@ function setup() {
 }
 
 function draw() {
+
   background(0,0,0);
   rectMode(CENTER);
   strokeWeight(1);
@@ -72,24 +83,22 @@ function draw() {
   rect(windowWidth/2, windowHeight/2, windowWidth-30, windowHeight -30);
   millisecond = millis();
 
+
   if(introTitleName){
   updateColor();
 
   increaseFade();
-  strokeWeight(0);
-  fill(255,255,255,fadeWelcome);
-  textFont("Nunito");
-  textSize(35);
   increasePos();
   textAlign(CENTER, CENTER);
-  text("W E L C O M E  T O", windowWidth/2, pos);
+  fill(255,255,255, fadeWelcome);
+  stroke(255,255,255, fadeWelcome);
+  textFont(font2, 30);
+  text("Welcome to", windowWidth/2, pos);
 
   fadeBlub = increaseFade2(fadeBlub);
-  fill(40,color,color,fadeBlub);
-  strokeWeight(0);
-  textSize(93);
-  textFont("Nunito");
-  text("B L Ü B", windowWidth/2, 325);
+  stroke(40,color,color,fadeBlub);
+  textFont(font, 80);
+  text("BLÜB", windowWidth/2, 325);
   }
 
   if(millisecond > 7000){
@@ -233,6 +242,7 @@ function increasePos(){
   }
 }
 
+
 function decreasePos(){
   if(dpos > 350){
     dpos = dpos - 10;
@@ -241,7 +251,7 @@ function decreasePos(){
 
 function increaseFade(){
   if(fadeWelcome < 200){
-    fadeWelcome = fadeWelcome + 10;
+    fadeWelcome = fadeWelcome + 2;
   }
 }
 
