@@ -229,11 +229,17 @@ function draw() {
 
   if (keyCode === ENTER) {
     triggerCircles = true;
+    introTitleName = false;
+    blub = false;
+    goal = false;
     instructions = false;
   }
 
   if(keyCode === BACKSPACE){
     triggerCircles = false;
+    introTitleName = false;
+    blub = false;
+    goal = false;
     endingMessage = true;
     instructions = false;
   }
