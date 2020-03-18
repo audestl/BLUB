@@ -6,18 +6,30 @@ let introTitleName = true;
 let pos = 50;
 let dpos = 1000;
 let fadeWelcome = 0;
+let fadeWelcome2 = 0;
 let fadeBlub = 0;
 let fadeWinner = 0;
 let color = 20;
 let colorDirection = 1;
 let millisecond;
 let goal = false;
+let goalText = false;
+let blub = false;
 let rectFade = 0;
 let rectFade2 = 0;
 let goalFade = 0;
 let goalFade2 = 0;
+let goalFade3 = 0;
 let instructions = false;
 let endingMessage = false;
+let textDots = [];
+let textDots2 = [];
+let textDots3 = [];
+let textDots4 = [];
+
+var fireworks = [];
+var gravity;
+
 
 let font;
 let font2;
@@ -30,6 +42,10 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(0,0,0);
+
+
+  //colorMode(HSB);
+  gravity = createVector(0, 0.2);
 
   //first game trail
   for (let i = windowWidth/15; i < ((windowWidth/4)*1.5); i = i + 55) {
@@ -71,6 +87,41 @@ function setup() {
       col += 20;
     }
 
+    //text for intro Blub
+    textFont(font2, 120);
+    var points  = font2.textToPoints("BLÜB", windowWidth/4+ 100, windowHeight/2+50);
+    for(var i = 0; i < points.length; i++){
+      var pt = points[i];
+      var textDot = new Dot(pt.x, pt.y, 3);
+      textDots.push(textDot);
+    }
+
+    //text for intro Blub
+    textFont(font2, 70);
+    var points2  = font2.textToPoints("The Goal", windowWidth/4+60, windowHeight/2-40);
+    for(var i = 0; i < points2.length; i++){
+      var pt = points2[i];
+      var textDot2 = new Dot(pt.x, pt.y, 3);
+      textDots2.push(textDot2);
+    }
+
+    //text for intro instructions
+    textFont(font2, 70);
+    var points3  = font2.textToPoints("Instructions", windowWidth/5, windowHeight/2-90);
+    for(var i = 0; i < points3.length; i++){
+      var pt = points3[i];
+      var textDot3 = new Dot(pt.x, pt.y, 3);
+      textDots3.push(textDot3);
+    }
+
+    //text for winner!!!
+    textFont(font2, 90);
+    var points4  = font2.textToPoints("Winner!!!", windowWidth/4-18, windowHeight/2+40);
+    for(var i = 0; i < points4.length; i++){
+      var pt = points4[i];
+      var textDot4 = new Dot(pt.x, pt.y, 3);
+      textDots4.push(textDot4);
+    }
 }
 
 function draw() {
@@ -83,96 +134,96 @@ function draw() {
   rect(windowWidth/2, windowHeight/2, windowWidth-30, windowHeight -30);
   millisecond = millis();
 
-
   if(introTitleName){
   updateColor();
-
   increaseFade();
   increasePos();
   textAlign(CENTER, CENTER);
   fill(255,255,255, fadeWelcome);
-  stroke(255,255,255, fadeWelcome);
-  textFont(font2, 30);
-  text("Welcome to", windowWidth/2, pos);
+  noStroke();
+  textFont(font2, 35);
+  text("Welcome to", windowWidth/2, windowHeight/2);
 
-  fadeBlub = increaseFade2(fadeBlub);
-  stroke(40,color,color,fadeBlub);
-  textFont(font, 80);
-  text("BLÜB", windowWidth/2, 325);
   }
 
-  if(millisecond > 7000){
+  if(millisecond > 2000 && introTitleName ===true){
     introTitleName = false;
+    blub = true;
   }
 
-  if(millisecond > 5000 && triggerCircles === false && endingMessage === false){
-    goal = true;
-  }
-
-  if(goal){
-    rectFade = increaseFade2(rectFade);
-    fill(0,0,0, rectFade);
-    noStroke();
-    rectMode(CENTER);
-    rect(windowWidth/2, windowHeight/2, windowWidth/2, windowHeight/2);
-
-    if(millisecond > 6000 && goal === true){
-      goalFade = increaseFade2(goalFade);
-      fill(255,255,255, goalFade);
-      textFont("Nunito");
-      textSize(30);
-      textAlign(CENTER, CENTER);
-      text("T H E  G O A L", windowWidth/2, 180);
-      fill(255,255,255, goalFade);
-      textFont("Montserrat");
-      textSize(15);
-      textAlign(CENTER, CENTER);
-      text("The game is made up of a trajectory of circles, where the start ", windowWidth/2, 220);
-      text("and end of the trajectory are the two bases. Each team starts by", windowWidth/2, 240);
-      text("sending one individual to run along the trajectory by jumping into", windowWidth/2, 260);
-      text("each shape, along with their corresponding stick, trying to make ", windowWidth/2, 280);
-      text("their way to their opposite base. However, when the two individuals", windowWidth/2, 300);
-      text("collide while on the trajectory, they face a challenge (ex: rock, paper,", windowWidth/2, 320);
-      text("scissors, match) to determine who continues the path, and who restarts ", windowWidth/2, 340);
-      text("from the beginning. The winner is the first team to scan their stick ", windowWidth/2, 360);
-      text("once they reach their opposite base.", windowWidth/2, 380);
+  if(blub === true){
+    fadeBlub = increaseFade2(fadeBlub);
+    for(var i =0; i < textDots.length; i++){
+      var v = textDots[i];
+      noStroke();
+      fill(50,color,color,fadeBlub);
+      v.behaviors();
+      v.update();
+      v.display();
     }
   }
 
-  if(millisecond > 17000){
+  if(millisecond > 7000 && triggerCircles === false && endingMessage === false && millisecond < 16000){
+    goal = true;
+    blub = false;
+    fadeWelcome = 0;
+  }
+
+  if(goal){
+    goalFade = increaseFade2(goalFade);
+    for(var i =0; i < textDots2.length; i++){
+      var v = textDots2[i];
+      noStroke();
+      fill(255,color,color,goalFade);
+      v.behaviors();
+      v.update();
+      v.display();
+    }
+
+    if(millisecond > 9000 && goal === true){
+      goalFade2 = increaseFade2(goalFade2);
+      fill(255,255,255, goalFade2);
+      textFont(font2);
+      textSize(15);
+      textAlign(CENTER, CENTER);
+      text("Be the first team to bring the cube to the opposite base", windowWidth/2, windowHeight/2+10);
+      text("by jumping in the circles that make up the trajectory.", windowWidth/2, windowHeight/2+35);
+    }
+  }
+
+  if(millisecond > 16000){
     goal = false;
   }
 
-  if(millisecond > 14000 && triggerCircles === false && endingMessage === false){
+  if(millisecond > 16000 && triggerCircles === false && endingMessage === false){
     instructions = true;
   }
 
   if(instructions){
-    rectFade2 = increaseFade2(rectFade2);
-    fill(0,0,0, rectFade2);
-    noStroke();
-    rectMode(CENTER);
-    rect(windowWidth/2, windowHeight/2, windowWidth/2, windowHeight/2);
+    goalFade = increaseFade2(goalFade);
+    for(var i =0; i < textDots3.length; i++){
+      var v = textDots3[i];
+      noStroke();
+      fill(255,color,color,goalFade);
+      v.behaviors();
+      v.update();
+      v.display();
+    }
 
-    if(millisecond > 15000 && instructions === true){
-      goalFade2 = increaseFade2(goalFade2);
-      fill(255,255,255, goalFade2);
-      textFont("Nunito");
-      textSize(30);
-      textAlign(CENTER, CENTER);
-      text("I N S T R U C T I O N S", windowWidth/2, 180);
-      fill(255,255,255, goalFade2);
-      textFont("Montserrat");
-      textSize(15);
+    if(millisecond > 18000 && instructions === true){
+      goalFade3 = increaseFade2(goalFade3);
+      fill(255,255,255, goalFade3);
+      textFont(font2);
+      textSize(14);
       textAlign(LEFT);
-      text("1 | Divide yourselves in teams of minimum 2 people.", windowWidth/2 - 200, 230);
-      text("2 | Each team should line up behind a base.", windowWidth/2 - 200, 260);
-      text("3 | When the teams are set, let the first person from", windowWidth/2 - 200, 290);
-      text("each team pick up the block from the base.", windowWidth/2 - 200, 315);
-      text("4 | The game will start once both teams pick up the block.", windowWidth/2 - 200, 345);
-      text("5 | When you are ready to start, pick up the block.", windowWidth/2 - 200, 375);
-      textAlign(CENTER, CENTER);
-      text("Get ready!", windowWidth/2, 400);
+      text("1 | Divide yourselves in teams of minimum 2 people.", windowWidth/4, windowHeight/2-50);
+      text("2 | Each team should line up behind a base.", windowWidth/4, windowHeight/2-20);
+      text("3 | When the teams are set, let the first person from", windowWidth/4, windowHeight/2+10);
+      text("each team pick up the block from the base.", windowWidth/4+35, windowHeight/2+40);
+      text("4 | The game will start once both teams pick up their block.", windowWidth/4, windowHeight/2+70);
+      text("5 | When 2 members of the opposite team collide, do rock", windowWidth/4, windowHeight/2+100);
+      text("paper scissors to determine who continues the", windowWidth/4+35, windowHeight/2+130);
+      text("trajectory and who restarts from the beginning. ", windowWidth/4+35, windowHeight/2+160);
     }
   }
 
@@ -184,16 +235,36 @@ function draw() {
   if(keyCode === BACKSPACE){
     triggerCircles = false;
     endingMessage = true;
+    instructions = false;
   }
 
   if(endingMessage){
+
     updateColor();
     fadeWinner = increaseFade2(fadeWinner);
-    fill(70,color,color,fadeWinner);
-    strokeWeight(0);
-    textSize(60);
-    textFont("Nunito");
-    text("W I N N E R  :  T E A M  1 !", windowWidth/2, 325);
+    for(var i =0; i < textDots4.length; i++){
+      var v = textDots4[i];
+      noStroke();
+      fill(70,color,color,fadeWinner);
+      v.behaviors();
+      v.update();
+      v.display();
+    }
+
+    if (random(1) < 0.03) {
+        fireworks.push(new Firework());
+      }
+
+      for (var i = fireworks.length - 1; i >= 0; i--) {
+        stroke(255);
+        strokeWeight(3);
+        fireworks[i].update();
+        fireworks[i].show();
+
+        if (fireworks[i].done()) {
+          fireworks.splice(i, 1);
+        }
+      }
   }
 
 
@@ -207,19 +278,19 @@ function draw() {
       individualCircle.display();
     }
     push();
-    fill(242,158,121);
-    noStroke();
-    translate(windowWidth-windowWidth/15.4, windowHeight-windowHeight/8);
+    stroke(242,158,121);
+    strokeWeight(4);
+    translate(windowWidth-windowWidth/15.3, windowHeight-windowHeight/7.75);
     rotate(frameCount / -300.0);
-    polygon(0, 0, 60, 8);
+    polygon(0, 0, 50, 8);
     pop();
 
     push();
-    fill(242,158,121);
-    noStroke();
-    translate(windowWidth/15.4, windowHeight-windowHeight/8);
+    stroke(242,158,121);
+    strokeWeight(4);
+    translate(windowWidth/15.3, windowHeight-windowHeight/7.75);
     rotate(frameCount / -300.0);
-    polygon(0, 0, 60, 8);
+    polygon(0, 0, 50, 8);
     pop();
   }
 }
@@ -237,7 +308,7 @@ function polygon(x, y, radius, npoints) {
 
 
 function increasePos(){
-  if(pos < 240){
+  if(pos < windowHeight/2 -90){
     pos = pos + 10;
   }
 }
@@ -257,7 +328,14 @@ function increaseFade(){
 
 function increaseFade2(f){
   if(f < 250){
-    f = f + 5;
+    f = f + 30;
+  }
+  return f;
+}
+
+function increaseFade3(f){
+  if(f < 250){
+    f = f + 30;
   }
   return f;
 }
