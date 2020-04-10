@@ -264,7 +264,7 @@ function draw() {
 }
 
 function increaseBluePath(circle){
-  circle = circle + 0.01;
+  circle = circle + 0.05;
   return circle;
 }
 
