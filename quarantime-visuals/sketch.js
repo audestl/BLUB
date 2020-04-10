@@ -26,6 +26,24 @@ let clockDiameter;
 
 let timer = 6;
 
+let pointsArray = [];
+let val = 1;
+let rad;
+//current size - continuously updated
+let size = 4;
+//minimum size
+let minSize = 2;
+//maximum size
+let maxSize = 10;
+//change speed for size (how much will the size increase/decrease each frame)
+let sizeSpeed = 0.05;
+
+let millisecond;
+let timepassed = 0;
+let enterOnce = true;
+let startTimer = false;
+let finalTime = 0;
+
 function preload() {
   font = loadFont('Bauhaus 93 Regular.ttf');
 }
@@ -46,10 +64,28 @@ function setup() {
   fade2 = 0;
   fade3 = 0;
 
+  rad = secondsRadius;
+
+  //dot rotating cirles
+  strokeWeight(8);
+  stroke(33,82,89);
+  beginShape(POINTS);
+  for (let a = 0; a < 360; a += 12) {
+    let angle = radians(a);
+    let x = cx + cos(angle) * secondsRadius;
+    let y = cy + sin(angle) * secondsRadius;
+    vertex(x, y);
+    i = createVector(x, y);
+    pointsArray.push(i);
+  }
+  endShape();
+
 }
 
 function draw() {
   background(0,0,0);
+
+  millisecond = millis();
 
   if(mainPage === true){
     noStroke();
@@ -211,31 +247,15 @@ function draw() {
     noFill();
     ellipse(windowWidth/2,windowHeight/2,windowWidth/3,windowWidth/3);
 
-    //ARC BLUE
-    strokeWeight(32);
-    stroke(33,82,89);
+    //rotating circle
 
-    blueCircle = increaseBluePath(blueCircle);
-    arc(windowWidth/2,windowHeight/2,windowWidth/3,windowWidth/3,blueCircle,-blueCircle);
-
-    //ARC RED
-    strokeWeight(32);
-    stroke(234,62,51);
-    redCircle = decreaseRedPath(redCircle);
-
-    arc(windowWidth/2,windowHeight/2,windowWidth/3,windowWidth/3,-redCircle,redCircle);
-
-    //dot cirles
-    strokeWeight(8);
-    stroke(33,82,89);
-    beginShape(POINTS);
-    for (let a = 0; a < 360; a += 12) {
-      let angle = radians(a);
-      let x = cx + cos(angle) * secondsRadius;
-      let y = cy + sin(angle) * secondsRadius;
-      vertex(x, y);
+    for(z = 0; z < pointsArray.length; z++){
+      size = map(sin(frameCount/decreaseStroke(sin(20000000)) * sizeSpeed),-1.0,1.0,minSize,maxSize);
+      fill(34,81,89);
+      noStroke();
+      //point(pointsArray[z]);
+      ellipse(pointsArray[z].x, pointsArray[z].y,size,size);
     }
-    endShape();
 
     //text 4ime to pick up
     textAlign(CENTER, CENTER);
@@ -254,21 +274,44 @@ function draw() {
       text(timer, windowWidth/2, windowHeight/2-10);
     }
 
-    if (timer == 0) {
+    if (timer == 0 && enterOnce) {
+      timePassed = millisecond;
+      enterOnce = false;
+      startTimer = true;
+    }
+
+    if(startTimer){
       textAlign(CENTER, CENTER);
       textSize(100);
       text("GO!", windowWidth/2, windowHeight/2);
+      text(str(timePassed), windowWidth/2, windowHeight/2);
     }
 
+    //trigger when game ends -
+    if(keyCode === SHIFT && finalTime === 0){
+      finalTime = millisecond - timePassed;
+    }
+    fill(0);
+    text(str(finalTime), windowWidth/2, windowHeight/2);
   }
 }
 
 function increaseBluePath(circle){
-  circle = circle + 0.05;
+  circle = circle + 0.01;
   return circle;
 }
 
 function decreaseRedPath(circle){
   circle = circle + 0.009;
   return circle;
+}
+
+function decreaseStroke(strokeInput){
+  strokeInput = strokeInput-3;
+  return strokeInput;
+}
+
+function increaseStroke(strokeInput){
+  strokeInput++;
+  return strokeInput;
 }
