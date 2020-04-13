@@ -1,0 +1,113 @@
+body {
+  margin: 0;
+}
+
+@font-face {
+  font-family: myFont;
+  src: url('Bauhaus 93 Regular.ttf');
+}
+
+.background{
+  background-color: #22525a;
+  width: 100vw;
+  height: 100vh;
+  display: table;
+}
+
+.left-circle{
+  margin-top: -20%;
+  margin-left: 6%;
+}
+
+.right-circle{
+  position: absolute;
+  right: 10%;
+  bottom: 0%;
+}
+
+#svg-circle2{
+  opacity: 50%;
+  width: 120%;
+}
+
+#svg-circle0{
+  opacity: 50%;
+  position: absolute;
+  width: 30%;
+}
+
+#svg-circle{
+  top: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 18%;
+}
+
+.center-circle{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  margin: -12% 0 0 -50%;
+}
+
+.winner-text{
+  background-color: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  margin: -7% 0 0 -50%;
+}
+
+.winner-text2{
+  background-color: none;
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  width: 100%;
+  margin: 8% 0 0 -50%;
+}
+
+.winner-text3{
+  background-color: none;
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  width: 100%;
+  margin: 4% 0 0 -50%;
+}
+
+.winner-text-one{
+  color: white;
+  font-family: 'Montserrat';
+  font-size: 2em;
+  letter-spacing: 0.3em;
+  text-align: center;
+}
+
+.winner-text-two{
+  margin-top: -2%;
+  color: white;
+  font-size: 4.5em;
+  font-family: myFont;
+  text-align: center;
+  letter-spacing: 0.3em;
+}
+
+.winner-text-three{
+  color: white;
+  font-family: 'Montserrat';
+  font-size: 1.2em;
+  letter-spacing: 0.3em;
+  text-align: center;
+}
+
+.winner-text-four{
+  color: #e73f32;
+  font-family: 'Montserrat';
+  font-size: 1.2em;
+  letter-spacing: 0.3em;
+  text-align: center;
+}
